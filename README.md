@@ -1,7 +1,7 @@
 # Oh-Hello
 
 ## Synopsis
-A simple &ldq;Hello World&rdq; project used as an introduction to online git repository use.
+A simple "Hello World" project used as an introduction to online git repository use.
 
 ## Motivation
 Used to learn a little about git repositories
