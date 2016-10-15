@@ -33,8 +33,6 @@ public class Hello {
 
   public static final String COPYRIGHT;
 
-  private static String MESSAGE;
-
   static {
 
     @SuppressWarnings("unused")
@@ -45,8 +43,9 @@ public class Hello {
     CLASSNAME = Hello.class.getSimpleName();
     COPYRIGHT = "(C) Copyright Alan Sampson <alansamps@gmail.com> 2016, All rights reserved."; //$NON-NLS-1$
 
-    MESSAGE = "Hello";
   }
+
+  private String message;
 
   /**
    * Default constructor
@@ -57,6 +56,7 @@ public class Hello {
     String METHOD = ".<init>()"; //$NON-NLS-1$
 
     // TODO Auto-generated constructor stub
+    message = "Hello";
 
     return;
   }
@@ -71,7 +71,7 @@ public class Hello {
     @SuppressWarnings("unused")
     String METHOD = ".main()"; //$NON-NLS-1$
 
-    System.out.println(MESSAGE);
+    System.out.println(new Hello().message);
 
     return;
   }
