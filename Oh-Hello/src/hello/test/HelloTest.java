@@ -90,12 +90,12 @@ public class HelloTest {
 
     hello = new Hello();
     expected = HelloResources.getString(HELLO_DEFAULT_MESSAGE);
-    actual = hello.getMessage();
+    actual = hello.getDataModel().getMessage();
     assertEquals(expected, actual);
 
     hello = new Hello(HelloResources.getString(HELLO_DEFAULT_MESSAGE));
     expected = HelloResources.getString(HELLO_DEFAULT_MESSAGE);
-    actual = hello.getMessage();
+    actual = hello.getDataModel().getMessage();
     assertEquals(expected, actual);
 
     return;

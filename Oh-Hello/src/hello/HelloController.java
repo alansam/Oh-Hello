@@ -1,33 +1,32 @@
 /*
  * -----------------------------------------------------------------------------
- * Oh-Hello:Hello.java:Oct 15, 2016:3:49:56 PM
+ * Oh-Hello:HelloController.java:Oct 16, 2016:11:31:40 AM
  *
  * (C) Copyright Alan Sampson <alansamps@gmail.com> 2016, All rights reserved.
  *
- * #(@) Hello.java $Header: $
+ * #(@) HelloController.java $Header: $
  *
  * -----------------------------------------------------------------------------
  *
- * Created: Oct 15, 2016
+ * Created: Oct 16, 2016
  *
  * -+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8
  */
 
 package hello;
 
-import static hello.resources.HelloResources.Table.HELLO_DEFAULT_MESSAGE;
-
-import hello.resources.HelloResources;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * Greeting
+ * Application controller
  * 
  * @author alansampson : <a href="mailto:%22Alan%20Sampson%22%20%3Calansamps@gmail.com%3E">&quot;Alan Sampson&quot;
  *         &lt;alansamps@gmail.com&gt;</a>
  * @version 0.1
  *
  */
-public class Hello {
+public class HelloController {
 
   public static final String ID;
 
@@ -37,33 +36,26 @@ public class Hello {
 
   public static final String COPYRIGHT;
 
-  public static final String DEFAULT_MESSAGE;
-
   static {
 
     @SuppressWarnings("unused")
     String METHOD = ".<clinit>"; //$NON-NLS-1$
 
-    ID = "@(#) Hello $Header: $"; //$NON-NLS-1$
+    ID = "@(#) HelloController $Header: $"; //$NON-NLS-1$
     MAINT = "@(#) INIT"; //$NON-NLS-1$
-    CLASSNAME = Hello.class.getSimpleName();
+    CLASSNAME = HelloController.class.getSimpleName();
     COPYRIGHT = "(C) Copyright Alan Sampson <alansamps@gmail.com> 2016, All rights reserved."; //$NON-NLS-1$
 
-    DEFAULT_MESSAGE = HelloResources.getString(HELLO_DEFAULT_MESSAGE);
   }
 
   private HelloModel dataModel;
 
-  private HelloController controller;
-
   private HelloView viewer;
 
   /**
-   * Default constructor
+   * 
    */
-  public Hello() {
-
-    this(DEFAULT_MESSAGE);
+  public HelloController() {
     @SuppressWarnings("unused")
     String METHOD = ".<init>()"; //$NON-NLS-1$
 
@@ -73,23 +65,20 @@ public class Hello {
   }
 
   /**
-   * Constructor
-   * 
-   * @param message
+   * @param args
    */
-  public Hello(String message) {
+  public void control(String[] args) {
 
     @SuppressWarnings("unused")
-    String METHOD = ".<init>()"; //$NON-NLS-1$
+    String METHOD = ".control()"; //$NON-NLS-1$
 
-    setController(new HelloController()); // Create the controller
-    setDataModel(new HelloModel()); // Create the data model
-    setViewer(new HelloViewConsole()); // Create a default viewer
-    getDataModel().setMessage(message); // pass default message to data model
-
-    // Pass viewer and data model to controller
-    getController().setViewer(getViewer());
-    getController().setDataModel(getDataModel());
+    //@formatter:off
+    getViewer().display(getDataModel().getMessage());
+    String[] messageArray = { "Hello, Hello", };
+    List<String> messageList = Arrays.asList(new String[] { "Hello, Hello, Hello", });
+    //@formatter:on
+    getViewer().display(messageArray);
+    getViewer().display(messageList);
 
     return;
   }
@@ -114,25 +103,6 @@ public class Hello {
   }
 
   /**
-   * @return the controller
-   */
-  public HelloController getController() {
-
-    return controller;
-  }
-
-  /**
-   * @param controller
-   *          the controller to set
-   */
-  public void setController(HelloController controller) {
-
-    this.controller = controller;
-
-    return;
-  }
-
-  /**
    * @return the viewer
    */
   public HelloView getViewer() {
@@ -147,22 +117,6 @@ public class Hello {
   public void setViewer(HelloView viewer) {
 
     this.viewer = viewer;
-
-    return;
-  }
-
-  /**
-   * Program entry point
-   * 
-   * @param args
-   */
-  public static void main(String[] args) {
-
-    @SuppressWarnings("unused")
-    String METHOD = ".main()"; //$NON-NLS-1$
-
-    Hello me = new Hello();
-    me.getController().control(args);
 
     return;
   }
