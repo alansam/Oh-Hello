@@ -15,11 +15,15 @@
 
 package hello;
 
+import static hello.resources.HelloResources.Table.HELLO_DEFAULT_MESSAGE;
+
+import hello.resources.HelloResources;
 
 /**
  * Greeting
  * 
- * @author alansampson : <a href="mailto:%22Alan%20Sampson%22%20%3Calansamps@gmail.com%3E">&quot;Alan Sampson&quot; &lt;alansamps@gmail.com&gt;</a>
+ * @author alansampson : <a href="mailto:%22Alan%20Sampson%22%20%3Calansamps@gmail.com%3E">&quot;Alan Sampson&quot;
+ *         &lt;alansamps@gmail.com&gt;</a>
  * @version 0.1
  *
  */
@@ -45,7 +49,7 @@ public class Hello {
     CLASSNAME = Hello.class.getSimpleName();
     COPYRIGHT = "(C) Copyright Alan Sampson <alansamps@gmail.com> 2016, All rights reserved."; //$NON-NLS-1$
 
-    DEFAULT_MESSAGE = "Hello";
+    DEFAULT_MESSAGE = HelloResources.getString(HELLO_DEFAULT_MESSAGE);
   }
 
   private String message;
@@ -73,9 +77,9 @@ public class Hello {
 
     @SuppressWarnings("unused")
     String METHOD = ".<init>()"; //$NON-NLS-1$
-    
+
     setMessage(message);
-    
+
     return;
   }
 
@@ -88,12 +92,13 @@ public class Hello {
   }
 
   /**
-   * @param message the message to set
+   * @param message
+   *          the message to set
    */
   public void setMessage(String message) {
 
     this.message = message;
-    
+
     return;
   }
 

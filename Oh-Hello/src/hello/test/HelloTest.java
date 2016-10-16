@@ -15,19 +15,21 @@
 
 package hello.test;
 
-import static org.junit.Assert.*;
+import static hello.resources.HelloResources.Table.HELLO_DEFAULT_MESSAGE;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import hello.Hello;
-
+import hello.resources.HelloResources;
 
 /**
  * Hello Test Case
  * 
- * @author alansampson : <a href="mailto:%22Alan%20Sampson%22%20%3Calansamps@gmail.com%3E">&quot;Alan Sampson&quot; &lt;alansamps@gmail.com&gt;</a>
+ * @author alansampson : <a href="mailto:%22Alan%20Sampson%22%20%3Calansamps@gmail.com%3E">&quot;Alan Sampson&quot;
+ *         &lt;alansamps@gmail.com&gt;</a>
  * @version 0.1
  *
  */
@@ -86,7 +88,13 @@ public class HelloTest {
     String expected;
     String actual;
 
-    expected = Hello.DEFAULT_MESSAGE;
+    hello = new Hello();
+    expected = HelloResources.getString(HELLO_DEFAULT_MESSAGE);
+    actual = hello.getMessage();
+    assertEquals(expected, actual);
+
+    hello = new Hello(HelloResources.getString(HELLO_DEFAULT_MESSAGE));
+    expected = HelloResources.getString(HELLO_DEFAULT_MESSAGE);
     actual = hello.getMessage();
     assertEquals(expected, actual);
 
