@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  */
 public class HelloResources {
 
-  private static final String BUNDLE_NAME = "hello.hello_resources"; //$NON-NLS-1$
+  private static final String BUNDLE_NAME = "hello.resources.hello_resources"; //$NON-NLS-1$
 
   private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
