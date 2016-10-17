@@ -15,8 +15,19 @@
 
 package hello;
 
-import java.util.Arrays;
+import static hello.resources.HelloResources.Table.HELLOCONTROLLER_FMT_000;
+import static hello.resources.HelloResources.Table.HELLOCONTROLLER_FMT_001;
+import static hello.resources.HelloResources.Table.HELLOCONTROLLER_HDR_000;
+import static hello.resources.HelloResources.Table.HELLOCONTROLLER_HDR_001;
+import static hello.resources.HelloResources.Table.HELLOCONTROLLER_HDR_002;
+import static hello.resources.HelloResources.Table.HELLO_DEFAULT_LOCALES;
+import static hello.resources.HelloResources.Table.HELLO_DEFAULT_LOCALE_DLM;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
+import hello.resources.HelloResources;
 
 /**
  * Application controller
@@ -36,6 +47,12 @@ public class HelloController {
 
   public static final String COPYRIGHT;
 
+  private static final String K_NS;
+
+  private static final String K_US;
+
+  private static final Object K_SP;
+
   static {
 
     @SuppressWarnings("unused")
@@ -46,6 +63,9 @@ public class HelloController {
     CLASSNAME = HelloController.class.getSimpleName();
     COPYRIGHT = "(C) Copyright Alan Sampson <alansamps@gmail.com> 2016, All rights reserved."; //$NON-NLS-1$
 
+    K_NS = ""; //$NON-NLS-1$
+    K_SP = " "; //$NON-NLS-1$
+    K_US = "_"; //$NON-NLS-1$
   }
 
   private HelloModel dataModel;
@@ -72,13 +92,69 @@ public class HelloController {
     @SuppressWarnings("unused")
     String METHOD = ".control()"; //$NON-NLS-1$
 
-    //@formatter:off
+    List<Locale> locales = new ArrayList<>();
+    String fmt000 = HelloResources.getString(HELLOCONTROLLER_FMT_000);
+    String fmt001 = HelloResources.getString(HELLOCONTROLLER_FMT_001);
+
     getViewer().display(getDataModel().getMessage());
-    String[] messageArray = { "Hello, Hello", };
-    List<String> messageList = Arrays.asList(new String[] { "Hello, Hello, Hello", });
-    //@formatter:on
-    getViewer().display(messageArray);
-    getViewer().display(messageList);
+
+    List<String> presentation;
+    presentation = new ArrayList<>();
+    presentation.add(String.format(fmt001, Hello.CLASSNAME, getDataModel().getVersion()));
+    presentation.add(K_NS);
+
+    getViewer().display(presentation);
+    presentation = null;
+
+    if (args.length <= 0) {
+      // Set up default set of locale names
+      locales.add(Locale.getDefault());
+      String dlm = HelloResources.getString(HELLO_DEFAULT_LOCALE_DLM);
+      args = HelloResources.getString(HELLO_DEFAULT_LOCALES).split(dlm); // $NON-NLS-1$
+    }
+
+    for (String al : args) {
+      String[] localeParts = al.split(K_US);
+      switch (localeParts.length) {
+      case 1:
+        locales.add(new Locale(localeParts[0]));
+        break;
+
+      case 2:
+        locales.add(new Locale(localeParts[0], localeParts[1]));
+        break;
+
+      case 3:
+      default:
+        locales.add(new Locale(localeParts[0], localeParts[1], localeParts[2]));
+        break;
+      }
+    }
+
+    Locale savedDefault = Locale.getDefault();
+    for (Locale lcl : locales) {
+      Locale.setDefault(lcl);
+
+      HelloModel ello = new HelloModel();
+      presentation = new ArrayList<>();
+      presentation
+          .add(String.format(fmt000, lcl.toString(), lcl.getDisplayLanguage(), lcl.getDisplayLanguage(savedDefault)));
+      if (lcl.getDisplayCountry().length() > 0) {
+        presentation.add(String.format(fmt000, K_SP, lcl.getDisplayCountry(), lcl.getDisplayCountry(savedDefault)));
+      }
+      if (lcl.getDisplayVariant().length() > 0) {
+        presentation.add(String.format(fmt000, K_SP, lcl.getDisplayVariant(), lcl.getDisplayVariant(savedDefault)));
+      }
+
+      presentation.add(String.format(fmt001, HelloResources.getString(HELLOCONTROLLER_HDR_000), Hello.CLASSNAME)); // $NON-NLS-1$
+      presentation.add(String.format(fmt001, HelloResources.getString(HELLOCONTROLLER_HDR_001), ello.getVersion())); // $NON-NLS-1$
+      presentation.add(String.format(fmt001, HelloResources.getString(HELLOCONTROLLER_HDR_002), ello.getMessage())); // $NON-NLS-1$
+      presentation.add(K_NS);
+
+      getViewer().display(presentation);
+      presentation = null;
+    }
+    Locale.setDefault(savedDefault);
 
     return;
   }

@@ -15,6 +15,11 @@
 
 package hello;
 
+import static hello.resources.HelloResources.Table.HELLO_MSG000;
+import static hello.resources.HelloResources.Table.HELLO_VERSION;
+
+import hello.resources.HelloResources;
+
 /**
  * Data Model
  * 
@@ -47,6 +52,8 @@ public class HelloModel {
 
   private String message;
 
+  private String version;
+
   /**
    * 
    */
@@ -54,7 +61,8 @@ public class HelloModel {
     @SuppressWarnings("unused")
     String METHOD = ".<init>()"; //$NON-NLS-1$
 
-    // TODO Auto-generated constructor stub
+    setMessage(HelloResources.getString(HELLO_MSG000));
+    setVersion(HelloResources.getString(HELLO_VERSION));
 
     return;
   }
@@ -74,6 +82,25 @@ public class HelloModel {
   public void setMessage(String message) {
 
     this.message = message;
+
+    return;
+  }
+
+  /**
+   * @return the version
+   */
+  public String getVersion() {
+
+    return version;
+  }
+
+  /**
+   * @param version
+   *          the version to set
+   */
+  public void setVersion(String version) {
+
+    this.version = version;
 
     return;
   }
