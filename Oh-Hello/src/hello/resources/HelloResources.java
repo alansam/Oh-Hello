@@ -117,15 +117,5 @@ public class HelloResources {
       HELLOCONTROLLER_HDR_001 = "HelloController.HDR_001"; //$NON-NLS-1$
       HELLOCONTROLLER_HDR_002 = "HelloController.HDR_002"; //$NON-NLS-1$
     }
-
-    Table() {
-      String x = null;
-      x = HELLOCONTROLLER_HDR_000;
-      x = HELLOCONTROLLER_HDR_001;
-      x = HELLOCONTROLLER_HDR_002;
-      if (x == null) {
-        ;
-      }
-    }
   }
 }
