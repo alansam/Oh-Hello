@@ -80,6 +80,10 @@ public class HelloResources {
 
     public static final String HELLO_MSG000;
 
+    public static final String HELLO_PROPERTY_FILE_NAME;
+
+    public static final String HELLO_PROP_HELLO_VIEW;
+
     public static final String HELLO_VERSION;
 
     public static final String HELLO_DEFAULT_LOCALE_DLM;
@@ -95,6 +99,16 @@ public class HelloResources {
     public static final String HELLOCONTROLLER_HDR_001;
 
     public static final String HELLOCONTROLLER_HDR_002;
+
+    public static final String HELLO_PROP_LINE_SEPARATOR;
+
+    public static final String HELLOVIEW_W_OUTPUT_MESSAGE;
+
+    public static final String HELLOVIEW_W_START_WIDTH;
+
+    public static final String HELLOVIEW_W_START_HEIGHT;
+
+    public static final String HELLOVIEW_W_FONT_SIZE;
 
     static {
 
@@ -116,6 +130,16 @@ public class HelloResources {
       HELLOCONTROLLER_HDR_000 = "HelloController.HDR_000"; //$NON-NLS-1$
       HELLOCONTROLLER_HDR_001 = "HelloController.HDR_001"; //$NON-NLS-1$
       HELLOCONTROLLER_HDR_002 = "HelloController.HDR_002"; //$NON-NLS-1$
+
+      HELLO_PROPERTY_FILE_NAME = "Hello.PROPERTY_FILE_NAME"; //$NON-NLS-1$
+      HELLO_PROP_HELLO_VIEW = "Hello.PROP_HELLO_VIEW"; //$NON-NLS-1$
+      HELLO_PROP_LINE_SEPARATOR = "Hello.PROP_LINE_SEPARATOR"; //$NON-NLS-1$
+
+      HELLOVIEW_W_OUTPUT_MESSAGE = "HelloView.W_OUTPUT_MESSAGE"; //$NON-NLS-1$
+      HELLOVIEW_W_START_WIDTH = "HelloView.W_START_WIDTH"; //$NON-NLS-1$
+      HELLOVIEW_W_START_HEIGHT = "HelloView.W_START_HEIGHT"; //$NON-NLS-1$
+      HELLOVIEW_W_FONT_SIZE = "HelloView.W_FONT_SIZE"; //$NON-NLS-1$
+
     }
   }
 }

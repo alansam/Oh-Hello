@@ -22,11 +22,19 @@ import static hello.resources.HelloResources.Table.HELLOCONTROLLER_HDR_001;
 import static hello.resources.HelloResources.Table.HELLOCONTROLLER_HDR_002;
 import static hello.resources.HelloResources.Table.HELLO_DEFAULT_LOCALES;
 import static hello.resources.HelloResources.Table.HELLO_DEFAULT_LOCALE_DLM;
+import static hello.resources.HelloResources.Table.HELLO_PROPERTY_FILE_NAME;
+import static hello.resources.HelloResources.Table.HELLO_PROP_HELLO_VIEW;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 
+import hello.HelloView.ViewType;
 import hello.resources.HelloResources;
 
 /**
@@ -72,6 +80,8 @@ public class HelloController {
 
   private HelloView viewer;
 
+  private Properties localProperties;
+
   /**
    * 
    */
@@ -79,7 +89,8 @@ public class HelloController {
     @SuppressWarnings("unused")
     String METHOD = ".<init>()"; //$NON-NLS-1$
 
-    // TODO Auto-generated constructor stub
+    String propFile = HelloResources.getString(HELLO_PROPERTY_FILE_NAME);
+    localProperties = fetchProperties(propFile);
 
     return;
   }
@@ -91,6 +102,8 @@ public class HelloController {
 
     @SuppressWarnings("unused")
     String METHOD = ".control()"; //$NON-NLS-1$
+
+    setViewer(allocateViewer());
 
     List<Locale> locales = new ArrayList<>();
     String fmt000 = HelloResources.getString(HELLOCONTROLLER_FMT_000);
@@ -157,6 +170,67 @@ public class HelloController {
     Locale.setDefault(savedDefault);
 
     return;
+  }
+
+  /**
+   * @return
+   */
+  private HelloView allocateViewer() {
+
+    @SuppressWarnings("unused")
+    String METHOD = ".allocateViewer()"; //$NON-NLS-1$
+
+    HelloView newView;
+    newView = null;
+
+    String propViewKey = HelloResources.getString(HELLO_PROP_HELLO_VIEW);
+    String propViewVal;
+    String propViewValDflt = HelloView.ViewType.CONSOLE.toString();
+    propViewVal = localProperties.getProperty(propViewKey);
+    propViewVal = propViewVal != null ? propViewVal : System.getProperty(propViewKey, propViewValDflt);
+
+    ViewType vType;
+    try {
+      vType = ViewType.valueOf(propViewVal.toUpperCase());
+    }
+    catch (IllegalArgumentException | NullPointerException ex) {
+      vType = ViewType.CONSOLE;
+    }
+
+    switch (vType) {
+    case WINDOW:
+      newView = new HelloViewWindow();
+      break;
+
+    case CONSOLE:
+    default:
+      newView = new HelloViewConsole();
+      break;
+    }
+
+    return newView;
+  }
+
+  /**
+   * @param propFile
+   * @return
+   */
+  private Properties fetchProperties(String propFile) {
+
+    @SuppressWarnings("unused")
+    String METHOD = ".fetchProperties()"; //$NON-NLS-1$
+
+    Properties props;
+    
+    try (InputStream propStrm = new FileInputStream(new File(propFile))) {
+      props = new Properties();
+      props.load(propStrm);
+    }
+    catch (IOException ex) {
+      props = new Properties(); // on error, flush any properties that did get loaded
+    }
+
+    return props;
   }
 
   /**

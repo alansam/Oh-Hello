@@ -16,11 +16,13 @@
 package hello;
 
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Viewer
  * 
- * @author alansampson : <a href="mailto:%22Alan%20Sampson%22%20%3Calansamps@gmail.com%3E">&quot;Alan Sampson&quot; &lt;alansamps@gmail.com&gt;</a>
+ * @author alansampson : <a href="mailto:%22Alan%20Sampson%22%20%3Calansamps@gmail.com%3E">&quot;Alan Sampson&quot;
+ *         &lt;alansamps@gmail.com&gt;</a>
  * @version 0.1
  *
  */
@@ -46,6 +48,10 @@ public abstract class HelloView {
 
   }
 
+  protected enum ViewType {
+    CONSOLE, WINDOW;
+  }
+
   /**
    * 
    */
@@ -67,9 +73,26 @@ public abstract class HelloView {
    * @param presentation
    */
   public abstract void display(List<String> presentation);
-  
+
   /**
    * @param presentation
    */
   public abstract void display(String[] presentation);
+
+  /**
+   * @param iVal
+   * @return
+   */
+  public static boolean isInteger(String iVal) {
+
+    @SuppressWarnings("unused")
+    String METHOD = ".isInteger()"; //$NON-NLS-1$
+
+    boolean result = false;
+    try (Scanner sc = new Scanner(iVal)) {
+      result = sc.hasNextInt();
+    }
+
+    return result;
+  }
 }
