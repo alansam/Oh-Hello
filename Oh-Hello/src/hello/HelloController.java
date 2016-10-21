@@ -193,9 +193,12 @@ public class HelloController {
 
     String propViewKey = HelloResources.getString(HELLO_PROP_HELLO_VIEW);
     String propViewVal;
+    String propViewValSys;
+    String propViewValLcl;
     String propViewValDflt = HelloView.ViewType.CONSOLE.toString();
-    propViewVal = localProperties.getProperty(propViewKey);
-    propViewVal = propViewVal != null ? propViewVal : System.getProperty(propViewKey, propViewValDflt);
+    propViewValSys = System.getProperty(propViewKey);
+    propViewValLcl = localProperties.getProperty(propViewKey, propViewValDflt);
+    propViewVal = propViewValSys != null ? propViewValSys : propViewValLcl;
 
     ViewType vType;
     try {
