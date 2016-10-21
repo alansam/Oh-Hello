@@ -57,7 +57,7 @@ public class HelloResources {
 
     try {
       Locale newLocale = Locale.getDefault();
-      if (!currentLocale.equals(currentLocale)) {
+      if (!currentLocale.equals(newLocale)) {
         currentLocale = newLocale;
         RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, currentLocale);
       }

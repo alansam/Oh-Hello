@@ -148,20 +148,28 @@ public class HelloController {
     for (Locale lcl : locales) {
       Locale.setDefault(lcl);
 
+      String lclName = lcl.toString();
+      //@formatter:off
+      String[] dl = { lcl.getDisplayLanguage(), lcl.getDisplayLanguage(savedDefault), };
+      String[] dc = { lcl.getDisplayCountry(), lcl.getDisplayCountry(savedDefault), };
+      String[] dv = { lcl.getDisplayVariant(), lcl.getDisplayVariant(savedDefault), };
+      //@formatter:on
       HelloModel ello = new HelloModel();
       presentation = new ArrayList<>();
-      presentation
-          .add(String.format(fmt000, lcl.toString(), lcl.getDisplayLanguage(), lcl.getDisplayLanguage(savedDefault)));
+      presentation.add(String.format(fmt000, lclName, dl[0], dl[1]));
       if (lcl.getDisplayCountry().length() > 0) {
-        presentation.add(String.format(fmt000, K_SP, lcl.getDisplayCountry(), lcl.getDisplayCountry(savedDefault)));
+        presentation.add(String.format(fmt000, K_SP, dc[0], dc[1]));
       }
       if (lcl.getDisplayVariant().length() > 0) {
-        presentation.add(String.format(fmt000, K_SP, lcl.getDisplayVariant(), lcl.getDisplayVariant(savedDefault)));
+        presentation.add(String.format(fmt000, K_SP, dv[0], dv[1]));
       }
 
-      presentation.add(String.format(fmt001, HelloResources.getString(HELLOCONTROLLER_HDR_000), Hello.CLASSNAME)); // $NON-NLS-1$
-      presentation.add(String.format(fmt001, HelloResources.getString(HELLOCONTROLLER_HDR_001), ello.getVersion())); // $NON-NLS-1$
-      presentation.add(String.format(fmt001, HelloResources.getString(HELLOCONTROLLER_HDR_002), ello.getMessage())); // $NON-NLS-1$
+      String klass = HelloResources.getString(HELLOCONTROLLER_HDR_000);
+      String versn = HelloResources.getString(HELLOCONTROLLER_HDR_001);
+      String txmsg = HelloResources.getString(HELLOCONTROLLER_HDR_002);
+      presentation.add(String.format(fmt001, klass, Hello.CLASSNAME)); // $NON-NLS-1$
+      presentation.add(String.format(fmt001, versn, ello.getVersion())); // $NON-NLS-1$
+      presentation.add(String.format(fmt001, txmsg, ello.getMessage())); // $NON-NLS-1$
       presentation.add(K_NS);
 
       getViewer().display(presentation);
