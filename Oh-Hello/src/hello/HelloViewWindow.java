@@ -27,6 +27,8 @@ import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,6 +36,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 
 import hello.resources.HelloResources;
@@ -44,7 +47,7 @@ import hello.resources.HelloResources;
  * @version 0.1
  *
  */
-public class HelloViewWindow extends HelloView {
+public class HelloViewWindow extends HelloView implements Runnable {
 
   public static final String ID;
 
@@ -123,7 +126,8 @@ public class HelloViewWindow extends HelloView {
     String METHOD = ".<init>()"; //$NON-NLS-1$
 
     windowTitle = wBorderTitle;
-    createWindow();
+    // Schedule a job for the event-dispatching thread: creating and showing this application's GUI.
+    SwingUtilities.invokeLater(this);
 
     return;
   }
@@ -182,8 +186,10 @@ public class HelloViewWindow extends HelloView {
     @SuppressWarnings("unused")
     String METHOD = ".display()"; //$NON-NLS-1$
 
-    textArea.append(line);
-    textArea.append(NL);
+    List<String> presentation;
+    presentation = new ArrayList<>();
+    presentation.add(line);
+    display(presentation);
 
     return;
   }
@@ -199,9 +205,25 @@ public class HelloViewWindow extends HelloView {
     @SuppressWarnings("unused")
     String METHOD = ".display()"; //$NON-NLS-1$
 
-    for (String line : presentation) {
-      textArea.append(line);
-      textArea.append(NL);
+    try {
+      // Schedule a job for the event-dispatching thread to update GUI elements.
+      SwingUtilities.invokeAndWait(new Runnable() {
+
+        @Override
+        public void run() {
+
+          presentation.forEach(line -> {
+            textArea.append(line);
+            textArea.append(NL);
+          });
+
+          return;
+        }
+      });
+    }
+    catch (InvocationTargetException | InterruptedException ex) {
+      // TODO Auto-generated catch block
+      ex.printStackTrace();
     }
 
     return;
@@ -219,6 +241,22 @@ public class HelloViewWindow extends HelloView {
     String METHOD = ".display()"; //$NON-NLS-1$
 
     display(Arrays.asList(presentation));
+
+    return;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Runnable#run()
+   */
+  @Override
+  public void run() {
+
+    @SuppressWarnings("unused")
+    String METHOD = ".run()"; //$NON-NLS-1$
+
+    createWindow();
 
     return;
   }
