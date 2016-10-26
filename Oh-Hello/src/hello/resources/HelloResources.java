@@ -84,6 +84,8 @@ public class HelloResources {
 
     public static final String HELLO_PROP_HELLO_VIEW;
 
+    public static final String HELLO_PROP_LANGTAG;
+
     public static final String HELLO_VERSION;
 
     public static final String HELLO_DEFAULT_LOCALE_DLM;
@@ -134,6 +136,7 @@ public class HelloResources {
       HELLO_PROPERTY_FILE_NAME = "Hello.PROPERTY_FILE_NAME"; //$NON-NLS-1$
       HELLO_PROP_HELLO_VIEW = "Hello.PROP_HELLO_VIEW"; //$NON-NLS-1$
       HELLO_PROP_LINE_SEPARATOR = "Hello.PROP_LINE_SEPARATOR"; //$NON-NLS-1$
+      HELLO_PROP_LANGTAG = "Hello.PROP_LANGTAG";  //$NON-NLS-1$
 
       HELLOVIEW_W_OUTPUT_MESSAGE = "HelloView.W_OUTPUT_MESSAGE"; //$NON-NLS-1$
       HELLOVIEW_W_START_WIDTH = "HelloView.W_START_WIDTH"; //$NON-NLS-1$

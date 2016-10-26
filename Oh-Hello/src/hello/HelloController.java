@@ -24,6 +24,7 @@ import static hello.resources.HelloResources.Table.HELLO_DEFAULT_LOCALES;
 import static hello.resources.HelloResources.Table.HELLO_DEFAULT_LOCALE_DLM;
 import static hello.resources.HelloResources.Table.HELLO_PROPERTY_FILE_NAME;
 import static hello.resources.HelloResources.Table.HELLO_PROP_HELLO_VIEW;
+import static hello.resources.HelloResources.Table.HELLO_PROP_LANGTAG;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,6 +44,8 @@ import hello.resources.HelloResources;
  * @author alansampson : <a href="mailto:%22Alan%20Sampson%22%20%3Calansamps@gmail.com%3E">&quot;Alan Sampson&quot;
  *         &lt;alansamps@gmail.com&gt;</a>
  * @version 0.1
+ * @see <a href="https://tools.ietf.org/html/bcp47">https://tools.ietf.org/html/bcp47</a>
+ * @see <a href="https://en.wikipedia.org/wiki/IETF_language_tag">https://en.wikipedia.org/wiki/IETF_language_tag</a>
  *
  */
 public class HelloController {
@@ -82,6 +85,10 @@ public class HelloController {
 
   private Properties localProperties;
 
+  private String propViewVal;
+
+  private String propLocale;
+
   /**
    * 
    */
@@ -103,6 +110,7 @@ public class HelloController {
     @SuppressWarnings("unused")
     String METHOD = ".control()"; //$NON-NLS-1$
 
+    setEnvironment();
     setViewer(allocateViewer());
 
     List<Locale> locales = new ArrayList<>();
@@ -127,21 +135,8 @@ public class HelloController {
     }
 
     for (String al : args) {
-      String[] localeParts = al.split(K_US);
-      switch (localeParts.length) {
-      case 1:
-        locales.add(new Locale(localeParts[0]));
-        break;
-
-      case 2:
-        locales.add(new Locale(localeParts[0], localeParts[1]));
-        break;
-
-      case 3:
-      default:
-        locales.add(new Locale(localeParts[0], localeParts[1], localeParts[2]));
-        break;
-      }
+      Locale l_ = localeFromLanguageTag(al);
+      locales.add(l_);
     }
 
     Locale savedDefault = Locale.getDefault();
@@ -181,6 +176,37 @@ public class HelloController {
   }
 
   /**
+   * 
+   */
+  private void setEnvironment() {
+
+    @SuppressWarnings("unused")
+    String METHOD = ".setEnvironment()"; //$NON-NLS-1$
+
+    String propViewKey = HelloResources.getString(HELLO_PROP_HELLO_VIEW);
+    String propViewValSys;
+    String propViewValLcl;
+    String propViewValDflt = HelloView.ViewType.CONSOLE.toString();
+    propViewValSys = System.getProperty(propViewKey);
+    propViewValLcl = localProperties.getProperty(propViewKey, propViewValDflt);
+    propViewVal = propViewValSys != null ? propViewValSys : propViewValLcl;
+
+    String propLocaleKey = HelloResources.getString(HELLO_PROP_LANGTAG);
+    String propLocaleSys;
+    String propLocaleLcl;
+    propLocaleSys = System.getProperty(propLocaleKey);
+    propLocaleLcl = localProperties.getProperty(propLocaleKey, K_NS);
+    propLocale = propLocaleSys != null ? propLocaleSys : propLocaleLcl;
+
+    if (propLocale.trim().length() > 0) {
+      //Locale.setDefault(Locale.forLanguageTag(propLocale));
+      Locale.setDefault(localeFromLanguageTag(propLocale));
+    }
+
+    return;
+  }
+
+  /**
    * @return
    */
   private HelloView allocateViewer() {
@@ -190,15 +216,6 @@ public class HelloController {
 
     HelloView newView;
     newView = null;
-
-    String propViewKey = HelloResources.getString(HELLO_PROP_HELLO_VIEW);
-    String propViewVal;
-    String propViewValSys;
-    String propViewValLcl;
-    String propViewValDflt = HelloView.ViewType.CONSOLE.toString();
-    propViewValSys = System.getProperty(propViewKey);
-    propViewValLcl = localProperties.getProperty(propViewKey, propViewValDflt);
-    propViewVal = propViewValSys != null ? propViewValSys : propViewValLcl;
 
     ViewType vType;
     try {
@@ -232,7 +249,7 @@ public class HelloController {
     String METHOD = ".fetchProperties()"; //$NON-NLS-1$
 
     Properties props;
-    
+
     try (InputStream propStrm = new FileInputStream(new File(propFile))) {
       props = new Properties();
       props.load(propStrm);
@@ -242,6 +259,35 @@ public class HelloController {
     }
 
     return props;
+  }
+
+  /**
+   * @param langTag
+   * @return
+   */
+  private Locale localeFromLanguageTag(String langTag) {
+
+    @SuppressWarnings("unused")
+    String METHOD = ".localeFromString()"; //$NON-NLS-1$
+
+    Locale lcl = null;
+    String[] localeParts = langTag.split(K_US);
+
+    switch (localeParts.length) {
+    case 1:
+      lcl = new Locale(localeParts[0]);
+      break;
+
+    case 2:
+      lcl = new Locale(localeParts[0], localeParts[1]);
+      break;
+
+    case 3:
+    default:
+      lcl = new Locale(localeParts[0], localeParts[1], localeParts[2]);
+      break;
+    }
+    return lcl;
   }
 
   /**
