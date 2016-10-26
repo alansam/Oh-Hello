@@ -20,11 +20,21 @@ import static hello.resources.HelloResources.Table.HELLOVIEW_W_OUTPUT_MESSAGE;
 import static hello.resources.HelloResources.Table.HELLOVIEW_W_START_HEIGHT;
 import static hello.resources.HelloResources.Table.HELLOVIEW_W_START_WIDTH;
 import static hello.resources.HelloResources.Table.HELLO_PROP_LINE_SEPARATOR;
+import static hello.resources.HelloResources.Table.HELLOVIEW_W_ABOUT;
+import static hello.resources.HelloResources.Table.HELLOVIEW_W_CLOSE;
+import static hello.resources.HelloResources.Table.HELLOVIEW_W_CLOSE_MSG;
+import static hello.resources.HelloResources.Table.HELLOVIEW_W_EXIT;
+import static hello.resources.HelloResources.Table.HELLOVIEW_W_FILE;
+import static hello.resources.HelloResources.Table.HELLOVIEW_W_HELP;
+import static hello.resources.HelloResources.Table.HELLOVIEW_W_SAVE_AS;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
@@ -34,8 +44,13 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 
@@ -65,6 +80,20 @@ public class HelloViewWindow extends HelloView implements Runnable {
 
   private static final int W_START_WIDTH;
 
+  protected static final String W_ABOUT;
+
+  protected static final String W_CLOSE;
+
+  protected static final String W_CLOSE_MSG;
+
+  protected static final String W_EXIT;
+
+  protected static final String W_FILE;
+
+  protected static final String W_HELP;
+
+  protected static final String W_SAVE_AS;
+
   private static final String NL;
 
   static {
@@ -77,18 +106,27 @@ public class HelloViewWindow extends HelloView implements Runnable {
     CLASSNAME = HelloViewWindow.class.getSimpleName();
     COPYRIGHT = "(C) Copyright Alan Sampson <alansamps@gmail.com> 2016, All rights reserved."; //$NON-NLS-1$
 
-    NL = System.getProperty(HelloResources.getString(HELLO_PROP_LINE_SEPARATOR)); // $NON-NLS-1$
-    W_BORDER_TITLE = HelloResources.getString(HELLOVIEW_W_OUTPUT_MESSAGE); // $NON-NLS-1$
+    NL = System.getProperty(HelloResources.getString(HELLO_PROP_LINE_SEPARATOR));
+    W_BORDER_TITLE = HelloResources.getString(HELLOVIEW_W_OUTPUT_MESSAGE);
 
     String iVal;
-    iVal = HelloResources.getString(HELLOVIEW_W_START_WIDTH); // $NON-NLS-1$
+    iVal = HelloResources.getString(HELLOVIEW_W_START_WIDTH);
     W_START_WIDTH = HelloView.isInteger(iVal) ? Integer.valueOf(iVal) : 1200;
 
-    iVal = HelloResources.getString(HELLOVIEW_W_START_HEIGHT); // $NON-NLS-1$
+    iVal = HelloResources.getString(HELLOVIEW_W_START_HEIGHT);
     W_START_HEIGHT = HelloView.isInteger(iVal) ? Integer.valueOf(iVal) : 800;
 
-    iVal = HelloResources.getString(HELLOVIEW_W_FONT_SIZE); // $NON-NLS-1$
+    iVal = HelloResources.getString(HELLOVIEW_W_FONT_SIZE);
     W_FONT_SIZE = HelloView.isInteger(iVal) ? Integer.valueOf(iVal) : 12;
+
+    W_ABOUT = HelloResources.getString(HELLOVIEW_W_ABOUT);
+    W_CLOSE = HelloResources.getString(HELLOVIEW_W_CLOSE);
+    W_CLOSE_MSG = HelloResources.getString(HELLOVIEW_W_CLOSE_MSG);
+    W_EXIT = HelloResources.getString(HELLOVIEW_W_EXIT);
+    W_FILE = HelloResources.getString(HELLOVIEW_W_FILE);
+    W_HELP = HelloResources.getString(HELLOVIEW_W_HELP);
+    W_SAVE_AS = HelloResources.getString(HELLOVIEW_W_SAVE_AS);
+
   }
 
   private String windowTitle;
@@ -166,13 +204,83 @@ public class HelloViewWindow extends HelloView implements Runnable {
         return;
       }
     });
+
+    JMenuBar mb = createMenuBar();
+    contents.add(mb, BorderLayout.NORTH);
+
     contents.add(scrollArea, BorderLayout.CENTER);
+
     window.setResizable(true);
     window.pack();
     window.setSize(W_START_WIDTH, W_START_HEIGHT);
+    window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     window.setVisible(true);
 
     return;
+  }
+
+  /**
+   * @return
+   */
+  private JMenuBar createMenuBar() {
+
+    @SuppressWarnings("unused")
+    String METHOD = ".createMenuBar()"; //$NON-NLS-1$
+
+    JMenuBar menuBar;
+    JMenu menuFile;
+    JMenu menuHelp;
+    JMenuItem menuItem;
+
+    menuBar = new JMenuBar();
+
+    menuFile = new JMenu(W_FILE);
+    menuFile.setMnemonic(KeyEvent.VK_F);
+    menuItem = new JMenuItem(W_SAVE_AS, KeyEvent.VK_S);
+    menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.META_MASK));
+    menuItem.setEnabled(false); // TODO: build a save dialogue
+    menuFile.add(menuItem);
+    menuItem = new JMenuItem(W_EXIT, KeyEvent.VK_X);
+    menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.META_MASK));
+    menuItem.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent evt) {
+
+        @SuppressWarnings("unused")
+        String METHOD = ".actionPerformed()"; //$NON-NLS-1$
+
+        if (evt.getActionCommand().equalsIgnoreCase(W_EXIT)) {
+          int ynDialog;
+          ynDialog = JOptionPane.showConfirmDialog(window, W_CLOSE_MSG, W_CLOSE, JOptionPane.YES_NO_OPTION);
+
+          switch (ynDialog) {
+          case JOptionPane.YES_OPTION:
+            window.dispose();
+            System.exit(0);
+            break;
+
+          case JOptionPane.NO_OPTION:
+          default:
+            break;
+          }
+        }
+
+        return;
+      }
+    });
+    menuFile.add(menuItem);
+
+    menuHelp = new JMenu(W_HELP);
+    menuHelp.setMnemonic(KeyEvent.VK_H);
+    menuItem = new JMenuItem(W_ABOUT);
+    menuItem.setEnabled(false); // TODO: build an "about" dialogue
+    menuHelp.add(menuItem);
+
+    menuBar.add(menuFile);
+    menuBar.add(menuHelp);
+
+    return menuBar;
   }
 
   /*
