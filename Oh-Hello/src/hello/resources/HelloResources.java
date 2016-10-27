@@ -112,6 +112,20 @@ public class HelloResources {
 
     public static final String HELLOVIEW_W_FONT_SIZE;
 
+    public static final String HELLOVIEW_W_ABOUT;
+
+    public static final String HELLOVIEW_W_CLOSE;
+
+    public static final String HELLOVIEW_W_CLOSE_MSG;
+
+    public static final String HELLOVIEW_W_EXIT;
+
+    public static final String HELLOVIEW_W_FILE;
+
+    public static final String HELLOVIEW_W_HELP;
+
+    public static final String HELLOVIEW_W_SAVE_AS;
+
     static {
 
       @SuppressWarnings("unused")
@@ -142,6 +156,14 @@ public class HelloResources {
       HELLOVIEW_W_START_WIDTH = "HelloView.W_START_WIDTH"; //$NON-NLS-1$
       HELLOVIEW_W_START_HEIGHT = "HelloView.W_START_HEIGHT"; //$NON-NLS-1$
       HELLOVIEW_W_FONT_SIZE = "HelloView.W_FONT_SIZE"; //$NON-NLS-1$
+
+      HELLOVIEW_W_ABOUT = "HelloView.W_ABOUT"; //$NON-NLS-1$
+      HELLOVIEW_W_CLOSE = "HelloView.W_CLOSE"; //$NON-NLS-1$
+      HELLOVIEW_W_CLOSE_MSG = "HelloView.W_CLOSE_MSG"; //$NON-NLS-1$
+      HELLOVIEW_W_EXIT = "HelloView.W_EXIT"; //$NON-NLS-1$
+      HELLOVIEW_W_FILE = "HelloView.W_FILE"; //$NON-NLS-1$
+      HELLOVIEW_W_HELP = "HelloView.W_HELP"; //$NON-NLS-1$
+      HELLOVIEW_W_SAVE_AS = "HelloView.W_SAVE_AS"; //$NON-NLS-1$
 
     }
   }
