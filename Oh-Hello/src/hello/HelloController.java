@@ -219,7 +219,7 @@ public class HelloController {
     propLocale = propLocaleSys != null ? propLocaleSys : propLocaleLcl;
 
     if (propLocale.trim().length() > 0) {
-      //Locale.setDefault(Locale.forLanguageTag(propLocale));
+      // Locale.setDefault(Locale.forLanguageTag(propLocale));
       Locale.setDefault(localeFromLanguageTag(propLocale));
     }
 

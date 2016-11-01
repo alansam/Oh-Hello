@@ -135,12 +135,12 @@ public class HelloResources {
       @SuppressWarnings("unused")
       String METHOD = ".<clinit>"; //$NON-NLS-1$
 
-      HELLO_MSG_LFMT_000 = "Hello.MSG_LFMT_000"; //$NON-NLS-1$
-      HELLO_MSG_LFMT_001 = "Hello.MSG_LFMT_001"; //$NON-NLS-1$
-
       ID = "@(#) Table $Header: $"; //$NON-NLS-1$
       MAINT = "@(#) INIT"; //$NON-NLS-1$
       CLASSNAME = Table.class.getSimpleName();
+
+      HELLO_MSG_LFMT_000 = "Hello.MSG_LFMT_000"; //$NON-NLS-1$
+      HELLO_MSG_LFMT_001 = "Hello.MSG_LFMT_001"; //$NON-NLS-1$
 
       HELLO_DEFAULT_MESSAGE = "Hello.DEFAULT_MESSAGE"; //$NON-NLS-1$
       HELLO_MSG000 = "Hello.MSG000"; //$NON-NLS-1$

@@ -15,20 +15,20 @@
 
 package hello;
 
-import static hello.resources.HelloResources.Table.HELLOVIEW_W_FONT_SIZE;
-import static hello.resources.HelloResources.Table.HELLOVIEW_W_OUTPUT_MESSAGE;
-import static hello.resources.HelloResources.Table.HELLOVIEW_W_START_HEIGHT;
-import static hello.resources.HelloResources.Table.HELLOVIEW_W_START_WIDTH;
-import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_000;
-import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_001;
-import static hello.resources.HelloResources.Table.HELLO_PROP_LINE_SEPARATOR;
 import static hello.resources.HelloResources.Table.HELLOVIEW_W_ABOUT;
 import static hello.resources.HelloResources.Table.HELLOVIEW_W_CLOSE;
 import static hello.resources.HelloResources.Table.HELLOVIEW_W_CLOSE_MSG;
 import static hello.resources.HelloResources.Table.HELLOVIEW_W_EXIT;
 import static hello.resources.HelloResources.Table.HELLOVIEW_W_FILE;
+import static hello.resources.HelloResources.Table.HELLOVIEW_W_FONT_SIZE;
 import static hello.resources.HelloResources.Table.HELLOVIEW_W_HELP;
+import static hello.resources.HelloResources.Table.HELLOVIEW_W_OUTPUT_MESSAGE;
 import static hello.resources.HelloResources.Table.HELLOVIEW_W_SAVE_AS;
+import static hello.resources.HelloResources.Table.HELLOVIEW_W_START_HEIGHT;
+import static hello.resources.HelloResources.Table.HELLOVIEW_W_START_WIDTH;
+import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_000;
+import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_001;
+import static hello.resources.HelloResources.Table.HELLO_PROP_LINE_SEPARATOR;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
