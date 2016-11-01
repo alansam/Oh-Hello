@@ -76,6 +76,10 @@ public class HelloResources {
 
     public static final String CLASSNAME;
 
+    public static final String HELLO_MSG_LFMT_000;
+
+    public static final String HELLO_MSG_LFMT_001;
+
     public static final String HELLO_DEFAULT_MESSAGE;
 
     public static final String HELLO_MSG000;
@@ -131,6 +135,9 @@ public class HelloResources {
       @SuppressWarnings("unused")
       String METHOD = ".<clinit>"; //$NON-NLS-1$
 
+      HELLO_MSG_LFMT_000 = "Hello.MSG_LFMT_000"; //$NON-NLS-1$
+      HELLO_MSG_LFMT_001 = "Hello.MSG_LFMT_001"; //$NON-NLS-1$
+
       ID = "@(#) Table $Header: $"; //$NON-NLS-1$
       MAINT = "@(#) INIT"; //$NON-NLS-1$
       CLASSNAME = Table.class.getSimpleName();
@@ -150,7 +157,7 @@ public class HelloResources {
       HELLO_PROPERTY_FILE_NAME = "Hello.PROPERTY_FILE_NAME"; //$NON-NLS-1$
       HELLO_PROP_HELLO_VIEW = "Hello.PROP_HELLO_VIEW"; //$NON-NLS-1$
       HELLO_PROP_LINE_SEPARATOR = "Hello.PROP_LINE_SEPARATOR"; //$NON-NLS-1$
-      HELLO_PROP_LANGTAG = "Hello.PROP_LANGTAG";  //$NON-NLS-1$
+      HELLO_PROP_LANGTAG = "Hello.PROP_LANGTAG"; //$NON-NLS-1$
 
       HELLOVIEW_W_OUTPUT_MESSAGE = "HelloView.W_OUTPUT_MESSAGE"; //$NON-NLS-1$
       HELLOVIEW_W_START_WIDTH = "HelloView.W_START_WIDTH"; //$NON-NLS-1$

@@ -16,6 +16,11 @@
 package hello;
 
 import static hello.resources.HelloResources.Table.HELLO_DEFAULT_MESSAGE;
+import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_000;
+import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_001;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import hello.resources.HelloResources;
 
@@ -39,17 +44,29 @@ public class Hello {
 
   public static final String DEFAULT_MESSAGE;
 
+  private static final String LFMT_000;
+
+  private static final String LFMT_001;
+
+  public static Logger logger;
+
   static {
 
-    @SuppressWarnings("unused")
+    logger = LoggerFactory.getLogger(Hello.class);
+    LFMT_000 = HelloResources.getString(HELLO_MSG_LFMT_000);
+    LFMT_001 = HelloResources.getString(HELLO_MSG_LFMT_001);
+
+    CLASSNAME = Hello.class.getSimpleName();
     String METHOD = ".<clinit>"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     ID = "@(#) Hello $Header: $"; //$NON-NLS-1$
     MAINT = "@(#) INIT"; //$NON-NLS-1$
-    CLASSNAME = Hello.class.getSimpleName();
     COPYRIGHT = "(C) Copyright Alan Sampson <alansamps@gmail.com> 2016, All rights reserved."; //$NON-NLS-1$
 
     DEFAULT_MESSAGE = HelloResources.getString(HELLO_DEFAULT_MESSAGE);
+
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
   }
 
   private HelloModel dataModel;
@@ -64,11 +81,12 @@ public class Hello {
   public Hello() {
 
     this(DEFAULT_MESSAGE);
-    @SuppressWarnings("unused")
     String METHOD = ".<init>()"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     // TODO Auto-generated constructor stub
 
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
     return;
   }
 
@@ -79,8 +97,8 @@ public class Hello {
    */
   public Hello(String message) {
 
-    @SuppressWarnings("unused")
     String METHOD = ".<init>()"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     setController(new HelloController()); // Create the controller
     setDataModel(new HelloModel()); // Create the data model
@@ -91,6 +109,7 @@ public class Hello {
     getController().setViewer(getViewer());
     getController().setDataModel(getDataModel());
 
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
     return;
   }
 
@@ -158,12 +177,13 @@ public class Hello {
    */
   public static void main(String[] args) {
 
-    @SuppressWarnings("unused")
     String METHOD = ".main()"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     Hello me = new Hello();
     me.getController().control(args);
 
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
     return;
   }
 }
