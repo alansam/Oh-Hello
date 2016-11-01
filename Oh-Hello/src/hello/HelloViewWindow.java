@@ -354,8 +354,7 @@ public class HelloViewWindow extends HelloView implements Runnable {
       });
     }
     catch (InvocationTargetException | InterruptedException ex) {
-      // TODO Auto-generated catch block
-      ex.printStackTrace();
+      logger.error(ex.getLocalizedMessage(), ex);
     }
 
     logger.trace(LFMT_001, CLASSNAME, METHOD);
