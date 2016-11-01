@@ -21,12 +21,12 @@ def err_file
 def rName = System.getProperty("R_NAME", "")
 
 if ("${rName}".length() > 0) {
-  log_file = "Oh.Hello.${rName}.out.${byDay}.log"
-  err_file = "Oh.Hello.${rName}.err.${byDay}.log"
+  log_file = "Oh-Hello.${rName}.out.${byDay}.log"
+  err_file = "Oh-Hello.${rName}.err.${byDay}.log"
 }
 else {
-  log_file = "Oh.Hello.out.${byDay}.log"
-  err_file = "Oh.Hello.err.${byDay}.log"
+  log_file = "Oh-Hello.out.${byDay}.log"
+  err_file = "Oh-Hello.err.${byDay}.log"
 }
 
 appender("FILEOUT", FileAppender) {

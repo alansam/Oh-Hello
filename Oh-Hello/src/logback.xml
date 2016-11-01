@@ -5,12 +5,12 @@
 
   <if condition='property("R_NAME").length() > 0'>
     <then>
-      <property name="log_file" value="Oh.Hello.${R_NAME}.out.${byDay}.log" />
-      <property name="err_file" value="Oh.Hello.${R_NAME}.err.${byDay}.log" />
+      <property name="log_file" value="Oh-Hello.${R_NAME}.out.${byDay}.log" />
+      <property name="err_file" value="Oh-Hello.${R_NAME}.err.${byDay}.log" />
     </then>
     <else>
-      <property name="log_file" value="Oh.Hello.out.${byDay}.log" />
-      <property name="err_file" value="Oh.Hello.err.${byDay}.log" />
+      <property name="log_file" value="Oh-Hello.out.${byDay}.log" />
+      <property name="err_file" value="Oh-Hello.err.${byDay}.log" />
     </else>
   </if>
 

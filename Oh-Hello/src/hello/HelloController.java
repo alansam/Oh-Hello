@@ -22,6 +22,8 @@ import static hello.resources.HelloResources.Table.HELLOCONTROLLER_HDR_001;
 import static hello.resources.HelloResources.Table.HELLOCONTROLLER_HDR_002;
 import static hello.resources.HelloResources.Table.HELLO_DEFAULT_LOCALES;
 import static hello.resources.HelloResources.Table.HELLO_DEFAULT_LOCALE_DLM;
+import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_000;
+import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_001;
 import static hello.resources.HelloResources.Table.HELLO_PROPERTY_FILE_NAME;
 import static hello.resources.HelloResources.Table.HELLO_PROP_HELLO_VIEW;
 import static hello.resources.HelloResources.Table.HELLO_PROP_LANGTAG;
@@ -34,6 +36,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import hello.HelloView.ViewType;
 import hello.resources.HelloResources;
@@ -64,19 +69,31 @@ public class HelloController {
 
   private static final Object K_SP;
 
+  private static final String LFMT_000;
+
+  private static final String LFMT_001;
+
+  public static Logger logger;
+
   static {
 
-    @SuppressWarnings("unused")
+    logger = LoggerFactory.getLogger(HelloController.class);
+    LFMT_000 = HelloResources.getString(HELLO_MSG_LFMT_000);
+    LFMT_001 = HelloResources.getString(HELLO_MSG_LFMT_001);
+
+    CLASSNAME = HelloController.class.getSimpleName();
     String METHOD = ".<clinit>"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     ID = "@(#) HelloController $Header: $"; //$NON-NLS-1$
     MAINT = "@(#) INIT"; //$NON-NLS-1$
-    CLASSNAME = HelloController.class.getSimpleName();
     COPYRIGHT = "(C) Copyright Alan Sampson <alansamps@gmail.com> 2016, All rights reserved."; //$NON-NLS-1$
 
     K_NS = ""; //$NON-NLS-1$
     K_SP = " "; //$NON-NLS-1$
     K_US = "_"; //$NON-NLS-1$
+
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
   }
 
   private HelloModel dataModel;
@@ -93,12 +110,14 @@ public class HelloController {
    * 
    */
   public HelloController() {
-    @SuppressWarnings("unused")
+
     String METHOD = ".<init>()"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     String propFile = HelloResources.getString(HELLO_PROPERTY_FILE_NAME);
     localProperties = fetchProperties(propFile);
 
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
     return;
   }
 
@@ -107,8 +126,8 @@ public class HelloController {
    */
   public void control(String[] args) {
 
-    @SuppressWarnings("unused")
     String METHOD = ".control()"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     setEnvironment();
     setViewer(allocateViewer());
@@ -172,6 +191,7 @@ public class HelloController {
     }
     Locale.setDefault(savedDefault);
 
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
     return;
   }
 
@@ -180,8 +200,8 @@ public class HelloController {
    */
   private void setEnvironment() {
 
-    @SuppressWarnings("unused")
     String METHOD = ".setEnvironment()"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     String propViewKey = HelloResources.getString(HELLO_PROP_HELLO_VIEW);
     String propViewValSys;
@@ -203,6 +223,7 @@ public class HelloController {
       Locale.setDefault(localeFromLanguageTag(propLocale));
     }
 
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
     return;
   }
 
@@ -211,8 +232,8 @@ public class HelloController {
    */
   private HelloView allocateViewer() {
 
-    @SuppressWarnings("unused")
     String METHOD = ".allocateViewer()"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     HelloView newView;
     newView = null;
@@ -222,6 +243,7 @@ public class HelloController {
       vType = ViewType.valueOf(propViewVal.toUpperCase());
     }
     catch (IllegalArgumentException | NullPointerException ex) {
+      logger.warn(ex.getLocalizedMessage(), ex);
       vType = ViewType.CONSOLE;
     }
 
@@ -236,6 +258,7 @@ public class HelloController {
       break;
     }
 
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
     return newView;
   }
 
@@ -245,8 +268,8 @@ public class HelloController {
    */
   private Properties fetchProperties(String propFile) {
 
-    @SuppressWarnings("unused")
     String METHOD = ".fetchProperties()"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     Properties props;
 
@@ -255,9 +278,11 @@ public class HelloController {
       props.load(propStrm);
     }
     catch (IOException ex) {
+      logger.error(ex.getLocalizedMessage(), ex);
       props = new Properties(); // on error, flush any properties that did get loaded
     }
 
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
     return props;
   }
 
@@ -267,8 +292,8 @@ public class HelloController {
    */
   private Locale localeFromLanguageTag(String langTag) {
 
-    @SuppressWarnings("unused")
     String METHOD = ".localeFromString()"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     Locale lcl = null;
     String[] localeParts = langTag.split(K_US);
@@ -287,6 +312,9 @@ public class HelloController {
       lcl = new Locale(localeParts[0], localeParts[1], localeParts[2]);
       break;
     }
+    logger.debug(lcl.toString());
+
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
     return lcl;
   }
 
