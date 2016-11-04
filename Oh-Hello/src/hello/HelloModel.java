@@ -122,4 +122,15 @@ public class HelloModel {
 
     return;
   }
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+
+    String to = String.format("HelloModel [message=%s, version=%s]", message, version);
+
+    return to;
+  }
 }

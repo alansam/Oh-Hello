@@ -80,6 +80,16 @@ public class HelloResources {
 
     public static final String HELLO_MSG_LFMT_001;
 
+    public static final String HELLO_MSG_LFMT_002;
+
+    public static final String HELLO_MSG_LFMT_200;
+
+    public static final String HELLO_DFMT_001;
+
+    public static final String HELLO_DFMT_002;
+
+    public static final String HELLO_DFMT_003;
+
     public static final String HELLO_DEFAULT_MESSAGE;
 
     public static final String HELLO_MSG000;
@@ -141,6 +151,13 @@ public class HelloResources {
 
       HELLO_MSG_LFMT_000 = "Hello.MSG_LFMT_000"; //$NON-NLS-1$
       HELLO_MSG_LFMT_001 = "Hello.MSG_LFMT_001"; //$NON-NLS-1$
+      HELLO_MSG_LFMT_002 = "Hello.MSG_LFMT_002"; //$NON-NLS-1$
+
+      HELLO_MSG_LFMT_200 = "Hello.MSG_LFMT_200"; //$NON-NLS-1$
+
+      HELLO_DFMT_001 = "Hello.DFMT_001"; //$NON-NLS-1$
+      HELLO_DFMT_002 = "Hello.DFMT_002"; //$NON-NLS-1$
+      HELLO_DFMT_003 = "Hello.DFMT_003"; //$NON-NLS-1$
 
       HELLO_DEFAULT_MESSAGE = "Hello.DEFAULT_MESSAGE"; //$NON-NLS-1$
       HELLO_MSG000 = "Hello.MSG000"; //$NON-NLS-1$

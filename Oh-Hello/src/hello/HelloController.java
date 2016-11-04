@@ -24,6 +24,10 @@ import static hello.resources.HelloResources.Table.HELLO_DEFAULT_LOCALES;
 import static hello.resources.HelloResources.Table.HELLO_DEFAULT_LOCALE_DLM;
 import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_000;
 import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_001;
+import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_200;
+import static hello.resources.HelloResources.Table.HELLO_DFMT_001;
+import static hello.resources.HelloResources.Table.HELLO_DFMT_002;
+import static hello.resources.HelloResources.Table.HELLO_DFMT_003;
 import static hello.resources.HelloResources.Table.HELLO_PROPERTY_FILE_NAME;
 import static hello.resources.HelloResources.Table.HELLO_PROP_HELLO_VIEW;
 import static hello.resources.HelloResources.Table.HELLO_PROP_LANGTAG;
@@ -33,6 +37,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -73,6 +78,14 @@ public class HelloController {
 
   private static final String LFMT_001;
 
+  private static final String LFMT_200;
+
+  private static final String DFMT_001;
+
+  private static final String DFMT_002;
+
+  private static final String DFMT_003;
+
   public static Logger logger;
 
   static {
@@ -80,6 +93,7 @@ public class HelloController {
     logger = LoggerFactory.getLogger(HelloController.class);
     LFMT_000 = HelloResources.getString(HELLO_MSG_LFMT_000);
     LFMT_001 = HelloResources.getString(HELLO_MSG_LFMT_001);
+    LFMT_200 = HelloResources.getString(HELLO_MSG_LFMT_200);
 
     CLASSNAME = HelloController.class.getSimpleName();
     String METHOD = ".<clinit>"; //$NON-NLS-1$
@@ -92,6 +106,10 @@ public class HelloController {
     K_NS = ""; //$NON-NLS-1$
     K_SP = " "; //$NON-NLS-1$
     K_US = "_"; //$NON-NLS-1$
+
+    DFMT_001 = HelloResources.getString(HELLO_DFMT_001);
+    DFMT_002 = HelloResources.getString(HELLO_DFMT_002);
+    DFMT_003 = HelloResources.getString(HELLO_DFMT_003);
 
     logger.trace(LFMT_001, CLASSNAME, METHOD);
   }
@@ -115,6 +133,7 @@ public class HelloController {
     logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     String propFile = HelloResources.getString(HELLO_PROPERTY_FILE_NAME);
+    logger.debug(LFMT_200, CLASSNAME, METHOD, String.format(DFMT_003, propFile));
     localProperties = fetchProperties(propFile);
 
     logger.trace(LFMT_001, CLASSNAME, METHOD);
@@ -143,6 +162,11 @@ public class HelloController {
     presentation.add(String.format(fmt001, Hello.CLASSNAME, getDataModel().getVersion()));
     presentation.add(K_NS);
 
+    if (logger.isDebugEnabled()) {
+      //@formatter:off
+      presentation.forEach(p_ -> { logger.debug(LFMT_200, CLASSNAME, METHOD, p_); });
+      //@formatter:on
+    }
     getViewer().display(presentation);
     presentation = null;
 
@@ -153,6 +177,11 @@ public class HelloController {
       args = HelloResources.getString(HELLO_DEFAULT_LOCALES).split(dlm); // $NON-NLS-1$
     }
 
+    if (logger.isDebugEnabled()) {
+      for (String arg : args) {
+        logger.debug(LFMT_200, CLASSNAME, METHOD, arg);
+      }
+    }
     for (String al : args) {
       Locale l_ = localeFromLanguageTag(al);
       locales.add(l_);
@@ -178,6 +207,7 @@ public class HelloController {
         presentation.add(String.format(fmt000, K_SP, dv[0], dv[1]));
       }
 
+      logger.debug(LFMT_200, CLASSNAME, METHOD, ello.toString());
       String klass = HelloResources.getString(HELLOCONTROLLER_HDR_000);
       String versn = HelloResources.getString(HELLOCONTROLLER_HDR_001);
       String txmsg = HelloResources.getString(HELLOCONTROLLER_HDR_002);
@@ -186,6 +216,11 @@ public class HelloController {
       presentation.add(String.format(fmt001, txmsg, ello.getMessage())); // $NON-NLS-1$
       presentation.add(K_NS);
 
+      if (logger.isDebugEnabled()) {
+        //@formatter:off
+        presentation.forEach(p_ -> { logger.debug(LFMT_200, CLASSNAME, METHOD, p_); });
+        //@formatter:on
+      }
       getViewer().display(presentation);
       presentation = null;
     }
@@ -221,6 +256,10 @@ public class HelloController {
     if (propLocale.trim().length() > 0) {
       // Locale.setDefault(Locale.forLanguageTag(propLocale));
       Locale.setDefault(localeFromLanguageTag(propLocale));
+    }
+    if (logger.isDebugEnabled()) {
+      Locale dlcl = Locale.getDefault();
+      logger.debug(LFMT_200, CLASSNAME, METHOD, String.format(DFMT_001, dlcl.getDisplayLanguage(), dlcl.getDisplayCountry()));
     }
 
     logger.trace(LFMT_001, CLASSNAME, METHOD);
@@ -276,6 +315,15 @@ public class HelloController {
     try (InputStream propStrm = new FileInputStream(new File(propFile))) {
       props = new Properties();
       props.load(propStrm);
+      if (logger.isDebugEnabled()) {
+        Enumeration<?> keys;
+        keys = props.propertyNames();
+        while (keys.hasMoreElements()) {
+          String key = (String) keys.nextElement();
+          String val = props.getProperty(key);
+          logger.debug(LFMT_200, CLASSNAME, METHOD, String.format(DFMT_002, key, val));
+        }
+      }
     }
     catch (IOException ex) {
       logger.error(ex.getLocalizedMessage(), ex);
@@ -289,6 +337,9 @@ public class HelloController {
   /**
    * @param langTag
    * @return
+   * @see <a href="http://www.loc.gov/standards/iso639-2/php/code_list.php">www.loc.gov/standards/iso639-2/php/code_list.php</a>
+   * @see <a href="http://www.chemie.fu-berlin.de/diverse/doc/ISO_3166.html">www.chemie.fu-berlin.de/diverse/doc/ISO_3166.html</a>
+   * @see <a href="http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry">www.iana.org/assignments/language-subtag-registry/language-subtag-registry</a>
    */
   private Locale localeFromLanguageTag(String langTag) {
 
@@ -312,7 +363,7 @@ public class HelloController {
       lcl = new Locale(localeParts[0], localeParts[1], localeParts[2]);
       break;
     }
-    logger.debug(lcl.toString());
+    logger.debug(LFMT_200, CLASSNAME, METHOD, String.format(DFMT_001, lcl.getDisplayLanguage(), lcl.getDisplayCountry()));
 
     logger.trace(LFMT_001, CLASSNAME, METHOD);
     return lcl;

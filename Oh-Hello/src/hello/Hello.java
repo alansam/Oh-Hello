@@ -181,6 +181,11 @@ public class Hello {
     logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     Hello me = new Hello();
+    if (logger.isDebugEnabled()) {
+      for (String arg : args) {
+        logger.debug(arg);
+      }
+    }
     me.getController().control(args);
 
     logger.trace(LFMT_001, CLASSNAME, METHOD);

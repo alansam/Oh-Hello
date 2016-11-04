@@ -28,6 +28,7 @@ import static hello.resources.HelloResources.Table.HELLOVIEW_W_START_HEIGHT;
 import static hello.resources.HelloResources.Table.HELLOVIEW_W_START_WIDTH;
 import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_000;
 import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_001;
+import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_002;
 import static hello.resources.HelloResources.Table.HELLO_PROP_LINE_SEPARATOR;
 
 import java.awt.BorderLayout;
@@ -105,6 +106,8 @@ public class HelloViewWindow extends HelloView implements Runnable {
 
   private static final String LFMT_001;
 
+  private static final String LFMT_002;
+
   public static Logger logger;
 
   static {
@@ -112,6 +115,7 @@ public class HelloViewWindow extends HelloView implements Runnable {
     logger = LoggerFactory.getLogger(HelloViewWindow.class);
     LFMT_000 = HelloResources.getString(HELLO_MSG_LFMT_000);
     LFMT_001 = HelloResources.getString(HELLO_MSG_LFMT_001);
+    LFMT_002 = HelloResources.getString(HELLO_MSG_LFMT_002);
 
     CLASSNAME = HelloViewWindow.class.getSimpleName();
     String METHOD = ".<clinit>"; //$NON-NLS-1$
@@ -217,11 +221,12 @@ public class HelloViewWindow extends HelloView implements Runnable {
       @Override
       public void windowClosing(WindowEvent evt) {
 
-        @SuppressWarnings("unused")
         String METHOD = ".windowClosing()"; //$NON-NLS-1$
+        logger.trace(LFMT_000, CLASSNAME, METHOD);
 
         window.dispose();
 
+        logger.trace(LFMT_001, CLASSNAME, METHOD);
         return;
       }
     });
@@ -269,8 +274,8 @@ public class HelloViewWindow extends HelloView implements Runnable {
       @Override
       public void actionPerformed(ActionEvent evt) {
 
-        @SuppressWarnings("unused")
         String METHOD = ".actionPerformed()"; //$NON-NLS-1$
+        logger.trace(LFMT_000, CLASSNAME, METHOD);
 
         if (evt.getActionCommand().equalsIgnoreCase(W_EXIT)) {
           int ynDialog;
@@ -279,7 +284,9 @@ public class HelloViewWindow extends HelloView implements Runnable {
           switch (ynDialog) {
           case JOptionPane.YES_OPTION:
             window.dispose();
-            System.exit(0);
+            Integer exitCode = new Integer(0);
+            logger.trace(LFMT_002, CLASSNAME, METHOD, exitCode);
+            System.exit(exitCode);
             break;
 
           case JOptionPane.NO_OPTION:
@@ -288,6 +295,7 @@ public class HelloViewWindow extends HelloView implements Runnable {
           }
         }
 
+        logger.trace(LFMT_001, CLASSNAME, METHOD);
         return;
       }
     });
@@ -344,11 +352,15 @@ public class HelloViewWindow extends HelloView implements Runnable {
         @Override
         public void run() {
 
+          String METHOD = ".run()"; //$NON-NLS-1$
+          logger.trace(LFMT_000, CLASSNAME, METHOD);
+
           presentation.forEach(line -> {
             textArea.append(line);
             textArea.append(NL);
           });
 
+          logger.trace(LFMT_001, CLASSNAME, METHOD);
           return;
         }
       });
