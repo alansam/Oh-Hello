@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+  <timestamp key="byDayTime" datePattern="yyyy-MM-dd'T'HH_mm_ss" />
+  <timestamp key="byDay" datePattern="yyyy-MM-dd" />
+
+  <if condition='property("R_NAME").length() > 0'>
+    <then>
+      <property name="log_file" value="Oh-Hello.${R_NAME}.out.${byDay}.log" />
+      <property name="err_file" value="Oh-Hello.${R_NAME}.err.${byDay}.log" />
+    </then>
+    <else>
+      <property name="log_file" value="Oh-Hello.out.${byDay}.log" />
+      <property name="err_file" value="Oh-Hello.err.${byDay}.log" />
+    </else>
+  </if>
+
+  <appender name="FILEOUT" class="ch.qos.logback.core.FileAppender">
+    <file>logs/${log_file}</file>
+    <append>true</append>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+      <pattern>
+        <!-- %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} = %msg%n -->
+        <!-- %d{yyyy-MM-dd'T'HH:mm:ss.SSSX} [%thread] %-5level %logger{36} = %msg%n -->
+        <!-- %date{ISO8601} [%thread] %-5level %logger{36} = %msg%n -->
+        %d{yyyy-MM-dd'T'HH:mm:ss.SSSX} [%thread] %-5level %logger{36} = %msg%n
+      </pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILEERR" class="ch.qos.logback.core.FileAppender">
+    <file>logs/${err_file}</file>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>WARN</level>
+    </filter>
+    <append>true</append>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+      <pattern>
+        <!-- %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} = %msg%n -->
+        <!-- %d{yyyy-MM-dd'T'HH:mm:ss.SSSXX} [%thread] %-5level %logger{36} = %msg%n -->
+        <!-- %date{ISO8601} [%thread] %-5level %logger{36} = %msg%n -->
+        %d{yyyy-MM-dd'T'HH:mm:ss.SSSXX} [%thread] %-5level %logger{36} = %msg%n
+      </pattern>
+    </encoder>
+  </appender>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>INFO</level>
+    </filter>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+      <pattern>
+        <!-- %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n -->
+        <!-- %d{yyyy-MM-dd'T'HH:mm:ss.SSSXX} [%thread] %-5level %logger{36} - %msg%n -->
+        <!-- %date{ISO8601} [%thread] %-5level %logger{36} - %msg%n -->
+        <!-- %msg%n -->
+        %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+      </pattern>
+    </encoder>
+  </appender>
+
+  <root level="ALL">
+    <appender-ref ref="FILEOUT" />
+    <appender-ref ref="FILEERR" />
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration>

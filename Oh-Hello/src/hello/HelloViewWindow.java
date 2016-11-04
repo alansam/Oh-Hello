@@ -15,18 +15,21 @@
 
 package hello;
 
-import static hello.resources.HelloResources.Table.HELLOVIEW_W_FONT_SIZE;
-import static hello.resources.HelloResources.Table.HELLOVIEW_W_OUTPUT_MESSAGE;
-import static hello.resources.HelloResources.Table.HELLOVIEW_W_START_HEIGHT;
-import static hello.resources.HelloResources.Table.HELLOVIEW_W_START_WIDTH;
-import static hello.resources.HelloResources.Table.HELLO_PROP_LINE_SEPARATOR;
 import static hello.resources.HelloResources.Table.HELLOVIEW_W_ABOUT;
 import static hello.resources.HelloResources.Table.HELLOVIEW_W_CLOSE;
 import static hello.resources.HelloResources.Table.HELLOVIEW_W_CLOSE_MSG;
 import static hello.resources.HelloResources.Table.HELLOVIEW_W_EXIT;
 import static hello.resources.HelloResources.Table.HELLOVIEW_W_FILE;
+import static hello.resources.HelloResources.Table.HELLOVIEW_W_FONT_SIZE;
 import static hello.resources.HelloResources.Table.HELLOVIEW_W_HELP;
+import static hello.resources.HelloResources.Table.HELLOVIEW_W_OUTPUT_MESSAGE;
 import static hello.resources.HelloResources.Table.HELLOVIEW_W_SAVE_AS;
+import static hello.resources.HelloResources.Table.HELLOVIEW_W_START_HEIGHT;
+import static hello.resources.HelloResources.Table.HELLOVIEW_W_START_WIDTH;
+import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_000;
+import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_001;
+import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_002;
+import static hello.resources.HelloResources.Table.HELLO_PROP_LINE_SEPARATOR;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -53,6 +56,9 @@ import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import hello.resources.HelloResources;
 
@@ -96,14 +102,27 @@ public class HelloViewWindow extends HelloView implements Runnable {
 
   private static final String NL;
 
+  private static final String LFMT_000;
+
+  private static final String LFMT_001;
+
+  private static final String LFMT_002;
+
+  public static Logger logger;
+
   static {
 
-    @SuppressWarnings("unused")
+    logger = LoggerFactory.getLogger(HelloViewWindow.class);
+    LFMT_000 = HelloResources.getString(HELLO_MSG_LFMT_000);
+    LFMT_001 = HelloResources.getString(HELLO_MSG_LFMT_001);
+    LFMT_002 = HelloResources.getString(HELLO_MSG_LFMT_002);
+
+    CLASSNAME = HelloViewWindow.class.getSimpleName();
     String METHOD = ".<clinit>"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     ID = "@(#) HelloViewWindow $Header: $"; //$NON-NLS-1$
     MAINT = "@(#) INIT"; //$NON-NLS-1$
-    CLASSNAME = HelloViewWindow.class.getSimpleName();
     COPYRIGHT = "(C) Copyright Alan Sampson <alansamps@gmail.com> 2016, All rights reserved."; //$NON-NLS-1$
 
     NL = System.getProperty(HelloResources.getString(HELLO_PROP_LINE_SEPARATOR));
@@ -127,6 +146,7 @@ public class HelloViewWindow extends HelloView implements Runnable {
     W_HELP = HelloResources.getString(HELLOVIEW_W_HELP);
     W_SAVE_AS = HelloResources.getString(HELLOVIEW_W_SAVE_AS);
 
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
   }
 
   private String windowTitle;
@@ -147,9 +167,12 @@ public class HelloViewWindow extends HelloView implements Runnable {
   public HelloViewWindow() throws HeadlessException {
 
     this(W_BORDER_TITLE);
-    @SuppressWarnings("unused")
     String METHOD = ".<init>()"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
+    // TODO Auto-generated constructor stub
+
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
     return;
   }
 
@@ -160,13 +183,15 @@ public class HelloViewWindow extends HelloView implements Runnable {
    * @throws HeadlessException
    */
   public HelloViewWindow(String wBorderTitle) throws HeadlessException {
-    @SuppressWarnings("unused")
+
     String METHOD = ".<init>()"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     windowTitle = wBorderTitle;
     // Schedule a job for the event-dispatching thread: creating and showing this application's GUI.
     SwingUtilities.invokeLater(this);
 
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
     return;
   }
 
@@ -175,8 +200,8 @@ public class HelloViewWindow extends HelloView implements Runnable {
    */
   private void createWindow() throws HeadlessException {
 
-    @SuppressWarnings("unused")
     String METHOD = ".createWindow()"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     window = new JFrame(windowTitle);
     contents = window.getContentPane();
@@ -196,11 +221,12 @@ public class HelloViewWindow extends HelloView implements Runnable {
       @Override
       public void windowClosing(WindowEvent evt) {
 
-        @SuppressWarnings("unused")
         String METHOD = ".windowClosing()"; //$NON-NLS-1$
+        logger.trace(LFMT_000, CLASSNAME, METHOD);
 
         window.dispose();
 
+        logger.trace(LFMT_001, CLASSNAME, METHOD);
         return;
       }
     });
@@ -216,6 +242,7 @@ public class HelloViewWindow extends HelloView implements Runnable {
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     window.setVisible(true);
 
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
     return;
   }
 
@@ -224,8 +251,8 @@ public class HelloViewWindow extends HelloView implements Runnable {
    */
   private JMenuBar createMenuBar() {
 
-    @SuppressWarnings("unused")
     String METHOD = ".createMenuBar()"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     JMenuBar menuBar;
     JMenu menuFile;
@@ -247,8 +274,8 @@ public class HelloViewWindow extends HelloView implements Runnable {
       @Override
       public void actionPerformed(ActionEvent evt) {
 
-        @SuppressWarnings("unused")
         String METHOD = ".actionPerformed()"; //$NON-NLS-1$
+        logger.trace(LFMT_000, CLASSNAME, METHOD);
 
         if (evt.getActionCommand().equalsIgnoreCase(W_EXIT)) {
           int ynDialog;
@@ -257,7 +284,9 @@ public class HelloViewWindow extends HelloView implements Runnable {
           switch (ynDialog) {
           case JOptionPane.YES_OPTION:
             window.dispose();
-            System.exit(0);
+            Integer exitCode = new Integer(0);
+            logger.trace(LFMT_002, CLASSNAME, METHOD, exitCode);
+            System.exit(exitCode);
             break;
 
           case JOptionPane.NO_OPTION:
@@ -266,6 +295,7 @@ public class HelloViewWindow extends HelloView implements Runnable {
           }
         }
 
+        logger.trace(LFMT_001, CLASSNAME, METHOD);
         return;
       }
     });
@@ -280,6 +310,7 @@ public class HelloViewWindow extends HelloView implements Runnable {
     menuBar.add(menuFile);
     menuBar.add(menuHelp);
 
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
     return menuBar;
   }
 
@@ -291,14 +322,15 @@ public class HelloViewWindow extends HelloView implements Runnable {
   @Override
   public void display(String line) {
 
-    @SuppressWarnings("unused")
     String METHOD = ".display()"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     List<String> presentation;
     presentation = new ArrayList<>();
     presentation.add(line);
     display(presentation);
 
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
     return;
   }
 
@@ -310,8 +342,8 @@ public class HelloViewWindow extends HelloView implements Runnable {
   @Override
   public void display(List<String> presentation) {
 
-    @SuppressWarnings("unused")
     String METHOD = ".display()"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     try {
       // Schedule a job for the event-dispatching thread to update GUI elements.
@@ -320,20 +352,24 @@ public class HelloViewWindow extends HelloView implements Runnable {
         @Override
         public void run() {
 
+          String METHOD = ".run()"; //$NON-NLS-1$
+          logger.trace(LFMT_000, CLASSNAME, METHOD);
+
           presentation.forEach(line -> {
             textArea.append(line);
             textArea.append(NL);
           });
 
+          logger.trace(LFMT_001, CLASSNAME, METHOD);
           return;
         }
       });
     }
     catch (InvocationTargetException | InterruptedException ex) {
-      // TODO Auto-generated catch block
-      ex.printStackTrace();
+      logger.error(ex.getLocalizedMessage(), ex);
     }
 
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
     return;
   }
 
@@ -345,11 +381,12 @@ public class HelloViewWindow extends HelloView implements Runnable {
   @Override
   public void display(String[] presentation) {
 
-    @SuppressWarnings("unused")
     String METHOD = ".display()"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     display(Arrays.asList(presentation));
 
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
     return;
   }
 
@@ -361,11 +398,12 @@ public class HelloViewWindow extends HelloView implements Runnable {
   @Override
   public void run() {
 
-    @SuppressWarnings("unused")
     String METHOD = ".run()"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     createWindow();
 
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
     return;
   }
 }

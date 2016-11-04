@@ -16,7 +16,12 @@
 package hello;
 
 import static hello.resources.HelloResources.Table.HELLO_MSG000;
+import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_000;
+import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_001;
 import static hello.resources.HelloResources.Table.HELLO_VERSION;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import hello.resources.HelloResources;
 
@@ -38,16 +43,27 @@ public class HelloModel {
 
   public static final String COPYRIGHT;
 
+  private static final String LFMT_000;
+
+  private static final String LFMT_001;
+
+  public static Logger logger;
+
   static {
 
-    @SuppressWarnings("unused")
+    logger = LoggerFactory.getLogger(HelloModel.class);
+    LFMT_000 = HelloResources.getString(HELLO_MSG_LFMT_000);
+    LFMT_001 = HelloResources.getString(HELLO_MSG_LFMT_001);
+
+    CLASSNAME = HelloModel.class.getSimpleName();
     String METHOD = ".<clinit>"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     ID = "@(#) HelloModel $Header: $"; //$NON-NLS-1$
     MAINT = "@(#) INIT"; //$NON-NLS-1$
-    CLASSNAME = HelloModel.class.getSimpleName();
     COPYRIGHT = "(C) Copyright Alan Sampson <alansamps@gmail.com> 2016, All rights reserved."; //$NON-NLS-1$
 
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
   }
 
   private String message;
@@ -58,12 +74,14 @@ public class HelloModel {
    * 
    */
   public HelloModel() {
-    @SuppressWarnings("unused")
+
     String METHOD = ".<init>()"; //$NON-NLS-1$
+    logger.trace(LFMT_000, CLASSNAME, METHOD);
 
     setMessage(HelloResources.getString(HELLO_MSG000));
     setVersion(HelloResources.getString(HELLO_VERSION));
 
+    logger.trace(LFMT_001, CLASSNAME, METHOD);
     return;
   }
 
@@ -103,5 +121,16 @@ public class HelloModel {
     this.version = version;
 
     return;
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+
+    String to = String.format("HelloModel [message=%s, version=%s]", message, version);
+
+    return to;
   }
 }
