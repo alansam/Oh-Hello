@@ -1,0 +1,7 @@
+<?eclipse.ant.import?>
+<project basedir="." default="U01-dir" name="Oh-Hello-U01">
+	<target name="U01-dir">
+		<mkdir dir="dist"/>
+		<mkdir dir="logs"/>
+	</target>
+</project>
