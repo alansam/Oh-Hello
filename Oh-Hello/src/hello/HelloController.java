@@ -57,6 +57,7 @@ import hello.resources.HelloResources;
  * @see <a href="https://tools.ietf.org/html/bcp47">https://tools.ietf.org/html/bcp47</a>
  * @see <a href="https://en.wikipedia.org/wiki/IETF_language_tag">https://en.wikipedia.org/wiki/IETF_language_tag</a>
  * @see <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes</a>
+ * @see <a href="https://en.wikipedia.org/wiki/ISO_3166-1">https://en.wikipedia.org/wiki/ISO_3166-1</a>
  *
  */
 public class HelloController {
