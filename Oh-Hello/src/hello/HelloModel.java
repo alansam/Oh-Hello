@@ -20,6 +20,8 @@ import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_000;
 import static hello.resources.HelloResources.Table.HELLO_MSG_LFMT_001;
 import static hello.resources.HelloResources.Table.HELLO_VERSION;
 
+import java.io.Serializable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +35,9 @@ import hello.resources.HelloResources;
  * @version 0.1
  *
  */
-public class HelloModel {
+public class HelloModel implements Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   public static final String ID;
 
@@ -123,14 +127,70 @@ public class HelloModel {
     return;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see java.lang.Object#toString()
    */
   @Override
   public String toString() {
 
-    String to = String.format("HelloModel [message=%s, version=%s]", message, version);
+    String to = String.format("%s@%08x [message=%s, version=%s]", CLASSNAME, hashCode(), message, version);
 
     return to;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode() {
+
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((message == null) ? 0 : message.hashCode());
+    result = prime * result + ((version == null) ? 0 : version.hashCode());
+
+    return result;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
+  @Override
+  public boolean equals(Object obj) {
+
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (!(obj instanceof HelloModel)) {
+      return false;
+    }
+    HelloModel other = (HelloModel) obj;
+    if (message == null) {
+      if (other.message != null) {
+        return false;
+      }
+    }
+    else if (!message.equals(other.message)) {
+      return false;
+    }
+    if (version == null) {
+      if (other.version != null) {
+        return false;
+      }
+    }
+    else if (!version.equals(other.version)) {
+      return false;
+    }
+
+    return true;
   }
 }
